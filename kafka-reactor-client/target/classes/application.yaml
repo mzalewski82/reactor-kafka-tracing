@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: kafka-reactor-client
+  data:
+    mongodb:
+      database: reactor-kafka
+
+management:
+  metrics:
+    mongo:
+      command:
+        enabled: false
+  tracing:
+    sampling:
+      probability: 1.0
+    enabled: true
+    propagation:
+      type: w3c
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+  zipkin:
+    tracing:
+      endpoint: http://localhost/api/v2/spans
+server:
+  port: 8081
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
